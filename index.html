@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Technomancer Assist</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Technomancer Assist <span id="version"></span></a>
+            </div>
+            <h4><span id="initiative" class="label label-info navbar-left"></span></h4>
+            <button class="btn btn-danger navbar-right" id="modeButton" type="button" onclick="vrMode()">
+                <span class="glyphicon glyphicon-unchecked" id="modeSpan" aria-hidden="true"></span> Hot Sim VR
+            </button>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <h1>Hello!</h1>
+        <p>This tool is designed for technomancers in Shadowrun 5th Edition.</p>
+        <p><b>Last Update: December 24, 2014</b></p>
+        <p>Bug fixes:
+            <ul>
+                <li>Corrected Hot Sim to give +2 instead of -2.</li>
+                <li>Removed Hot Sim bonus for non-Matrix Actions and defense rolls</li>
+            </ul>
+        </p>
+        <p>Features Added:
+            <ul>
+                <li>Added +2 default to Matrix Perception.</li>
+                <li>Added -1 to skills you are defaulting.</li>
+                <li>Added Matrix Attributes to the Attributes section.</li>
+            </ul>
+        </p>
+
+        <p><a class="btn btn-primary btn-lg" onclick="parentNode.parentNode.remove();" role="button">Hide</a></p>
+    </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#attributePanel">
+            <h3 class="panel-title">Attributes <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="attributePanel">
+            Enter your attributes and modifications here.
+        
+            <!--Attribute Table-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Attribute</b>
+                    </td>
+                    <td>
+                        <b>Base Value</b>
+                    </td>
+                    <td>
+                        <b>Modification</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Strength
+                    </td>
+                    <td>
+                        <input type="number" id="strength" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="strengthMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Body
+                    </td>
+                    <td>
+                        <input type="number" id="body" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="bodyMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Agility
+                    </td>
+                    <td>
+                        <input type="number" id="agility" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="agilityMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Reaction
+                    </td>
+                    <td>
+                        <input type="number" id="reaction" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="reactionMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Logic
+                    </td>
+                    <td>
+                        <input type="number" id="logic" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="logicMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Intuition
+                    </td>
+                    <td>
+                        <input type="number" id="intuition" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="intuitionMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Willpower
+                    </td>
+                    <td>
+                        <input type="number" id="willpower" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="willpowerMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Charisma
+                    </td>
+                    <td>
+                        <input type="number" id="charisma" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="charismaMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resonance
+                    </td>
+                    <td>
+                        <input type="number" id="resonance" value="1">
+                    </td>
+                    <td>
+                        <input type="number" id="resonanceMod" value="0">
+                    </td>
+                </tr>
+            </table>
+            <input type="button" value="Update" class="btn btn-default" onclick="setAttributes()">
+            <br /><br />
+            <table class="table">
+                <tr>
+                    <td class="text-center"><b>Device Rating</b></td>
+                    <td class="text-center"><b>Attack</b></td>
+                    <td class="text-center"><b>Sleaze</b></td>
+                    <td class="text-center"><b>Data Processing</b></td>
+                    <td class="text-center"><b>Firewall</b></td>
+                </tr>
+                <tr>
+                    <td class="text-center"><span id="deviceRatingSpan" title=""></span></td>
+                    <td class="text-center"><span id="attackSpan" title=""></span></td>
+                    <td class="text-center"><span id="sleazeSpan" title=""></span></td>
+                    <td class="text-center"><span id="dataProcessingSpan" title=""></span></td>
+                    <td class="text-center"><span id="firewallSpan" title=""></span></td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#skillPanel">
+            <h3 class="panel-title">Skills <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="skillPanel">
+            Add your relevant skills here. Does not keep track of specializations.
+        
+            <!--Attribute Table-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Skill</b>
+                    </td>
+                    <td>
+                        <b>Base Value</b>
+                    </td>
+                    <td>
+                        <b>Modification</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Compiling
+                    </td>
+                    <td>
+                        <input type="number" id="compiling" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="compilingMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Decompiling
+                    </td>
+                    <td>
+                        <input type="number" id="decompiling" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="decompilingMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Registering
+                    </td>
+                    <td>
+                        <input type="number" id="registering" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="registeringMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Computer
+                    </td>
+                    <td>
+                        <input type="number" id="computer" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="computerMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cybercombat
+                    </td>
+                    <td>
+                        <input type="number" id="cybercombat" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="cybercombatMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Electronic Warfare
+                    </td>
+                    <td>
+                        <input type="number" id="electronicWarfare" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="electronicWarfareMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hacking
+                    </td>
+                    <td>
+                        <input type="number" id="hacking" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="hackingMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hardware
+                    </td>
+                    <td>
+                        <input type="number" id="hardware" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="hardwareMod" value="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Software
+                    </td>
+                    <td>
+                        <input type="number" id="software" value="0">
+                    </td>
+                    <td>
+                        <input type="number" id="softwareMod" value="0">
+                    </td>
+                </tr>
+            </table>
+            <input type="button" value="Update" class="btn btn-default" onclick="setSkills()">
+        </div>
+    </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#echoPanel">
+            <h3 class="panel-title">Echos <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="echoPanel">
+            Checkmark if you have any of these echoes.
+        
+            <!--Attribute Table-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Echo</b>
+                    </td>
+                    <td>
+                        <b>Taken</b>
+                    </td>
+                    <td>
+                        <b>Level</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Attack Upgrade
+                    </td>
+                    <td>
+                        <input type="checkbox" id="attackUpgrade" unchecked>
+                    </td>
+                    <td>
+                        <input type="number" id="attackUpgradeLevel" value="1" max="2" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Data Processing Upgrade
+                    </td>
+                    <td>
+                        <input type="checkbox" id="dataProcessingUpgrade" unchecked>
+                    </td>
+                    <td>
+                        <input type="number" id="dataProcessingUpgradeLevel" value="1" max="2" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Firewall Upgrade
+                    </td>
+                    <td>
+                        <input type="checkbox" id="firewallUpgrade" unchecked>
+                    </td>
+                    <td>
+                        <input type="number" id="firewallUpgradeLevel" value="1" max="2" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        NeuroFilter
+                    </td>
+                    <td>
+                        <input type="checkbox" id="neuroFilter" unchecked>
+                    </td>
+                    <td>
+                        <input type="number" id="neuroFilterLevel" value="1" max="2" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Overclocking
+                    </td>
+                    <td>
+                        <input type="checkbox" id="overclocking" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sleaze Upgrade
+                    </td>
+                    <td>
+                        <input type="checkbox" id="sleazeUpgrade" unchecked>
+                    </td>
+                    <td>
+                        <input type="number" id="sleazeUpgradeLevel" value="1" max="2" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Edit
+                    </td>
+                    <td>
+                        <input type="checkbox" id="editProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Encryption
+                    </td>
+                    <td>
+                        <input type="checkbox" id="encryptionProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Signal Scrub
+                    </td>
+                    <td>
+                        <input type="checkbox" id="signalScrubProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Toolbox
+                    </td>
+                    <td>
+                        <input type="checkbox" id="toolboxProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Armor
+                    </td>
+                    <td>
+                        <input type="checkbox" id="armorProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Biofeedback Filter
+                    </td>
+                    <td>
+                        <input type="checkbox" id="biofeedbackFilterProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Defuse
+                    </td>
+                    <td>
+                        <input type="checkbox" id="defuseProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Decryption
+                    </td>
+                    <td>
+                        <input type="checkbox" id="decryptionProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Exploit
+                    </td>
+                    <td>
+                        <input type="checkbox" id="exploitProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Shell
+                    </td>
+                    <td>
+                        <input type="checkbox" id="shellProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Stealth
+                    </td>
+                    <td>
+                        <input type="checkbox" id="stealthProgram" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Program: Track
+                    </td>
+                    <td>
+                        <input type="checkbox" id="trackProgram" unchecked>
+                    </td>
+                </tr>
+            </table>
+            <input type="button" class="btn btn-default" value="Update" onclick="setEchoes()">
+        </div>
+    </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#optionsPanel">
+            <h3 class="panel-title">Other Variables (Noise, Grids, etc) <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="optionsPanel">
+            Additional options.
+        
+            <!--Attribute Table-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Option</b>
+                    </td>
+                    <td>
+                        <b>Level</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Noise
+                    </td>
+                    <td>
+                        <input type="number" id="noiseLevel" value="0" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Sustained Complex Forms
+                    </td>
+                    <td>
+                        <input type="number" id="sustainedForms" value="0" min="0">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Target on different grid
+                    </td>
+                    <td>
+                        <input type="checkbox" id="differentGrid" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Running Silent
+                    </td>
+                    <td>
+                        <input type="checkbox" id="runningSilent" unchecked>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wound Modifiers</td>
+                    <td><input type="number" id="woundModifier" value="0" max="0" min="-7"></td>
+                </tr>
+                <tr>
+                    <td>Stun Modifiers</td>
+                    <td><input type="number" id="stunModifier" value="0" max="0" min="-7"></td>
+                </tr>
+            </table>
+            <input type="button" value="update" class="btn btn-default" onclick="setOptions()">
+        </div>
+    </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#actionsPanel">
+            <h3 class="panel-title">Matrix Actions <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="actionsPanel">
+            Various Matrix actions
+        
+            <!--Attribute Table-->
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Action</b>
+                    </td>
+                    <td>
+                        <b>Marks</b>
+                    </td>
+                    <td>
+                        <b>Dice</b>
+                    </td>
+                    <td>
+                        <b>Defended with</b>
+                    </td>
+                    <td>
+                        <b>Your Defense</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resist Damage
+                    </td>
+                    <td>
+                        <span>n/a</span>
+                    </td>
+                    <td>
+                        n/a
+                    </td>
+                    <td>
+                        Device Rating + Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="resistDamageDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resist Data Bomb
+                    </td>
+                    <td>
+                        <span>n/a</span>
+                    </td>
+                    <td>
+                        n/a
+                    </td>
+                    <td>
+                        Device Rating + Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="resistDataBombDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resist Biofeedback
+                    </td>
+                    <td>
+                        <span>n/a</span>
+                    </td>
+                    <td>
+                        n/a
+                    </td>
+                    <td>
+                        Device Rating + Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="resistBiofeedbackDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Brute Force (1 Mark)
+                    </td>
+                    <td>
+                        <span>None</span>
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce1Dice"></span>
+                    </td>
+                    <td>
+                        WIL+Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce1Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Brute Force (2 Marks)
+                    </td>
+                    <td>
+                        <span>None</span>
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce2Dice"></span>
+                    </td>
+                    <td>
+                        WIL+Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce2Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Brute Force (3 Marks)
+                    </td>
+                    <td>
+                        <span>None</span>
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce3Dice"></span>
+                    </td>
+                    <td>
+                        WIL+Firewall
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="bruteForce3Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Check Overwatch Score
+                    </td>
+                    <td>None</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="checkOverwatchScoreDice"></span>
+                    </td>
+                    <td>6 Dice</td>
+                </tr>
+                <tr>
+                    <td>
+                        Crack File
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="crackFileDice"></span>
+                    </td>
+                    <td>Protection Rating x 2</td>
+                </tr>
+                <tr>
+                    <td>
+                        Crash Program
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="crashProgramDice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="crashProgramDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Data Spike
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="dataSpikeDice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="dataSpikeDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Disarm Data Bomb
+                    </td>
+                    <td>none</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="disarmDataBombDice"></span>
+                    </td>
+                    <td>Data Bomb Rating x 2</td>
+                </tr>
+                <tr>
+                    <td>
+                        Edit File
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="editFileDice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="editFileDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Protect File
+                    </td>
+                    <td>Owner</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="protectFileDice"></span>
+                    </td>
+                    <td>None. Hits = Protection Rating</td>
+                </tr>
+                <tr>
+                    <td>
+                        Erase Mark (1 Mark)
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase1MarkDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase1MarkDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Erase Mark (2 Marks)
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase2MarkDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase2MarkDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Erase Mark (3 Marks)
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase3MarkDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="erase3MarkDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Erase Matrix Signature
+                    </td>
+                    <td>none</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="eraseMatrixSignatureDice"></span>
+                    </td>
+                    <td>Signature Rating x 2</td>
+                </tr>
+                <tr>
+                    <td>
+                        Format Device
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="formatDeviceDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="formatDeviceDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hack on the Fly (1 mark)
+                    </td>
+                    <td>None</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly1Dice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly1Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hack on the Fly (2 marks)
+                    </td>
+                    <td>None</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly2Dice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly2Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hack on the Fly (3 marks)
+                    </td>
+                    <td>None</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly3Dice"></span>
+                    </td>
+                    <td>INT+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hackOnTheFly3Defense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Hide
+                    </td>
+                    <td>0</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hideDice"></span>
+                    </td>
+                    <td>INT+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="hideDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Jackout (Link-locked)
+                    </td>
+                    <td>Owner</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="jackOutDice"></span>
+                    </td>
+                    <td>LOG+Attack</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="jackOutDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Jam Signals
+                    </td>
+                    <td>Owner</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="jamSignalsDice"></span>
+                    </td>
+                    <td>None. Hits = +noise rating</td>
+                </tr>
+                <tr>
+                    <td>
+                        Jump into Rigged Device
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="jumpIntoRiggedDeviceDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="jumpIntoRiggedDeviceDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Matrix Perception
+                    </td>
+                    <td>None</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="matrixPerceptionDice"></span>
+                    </td>
+                    <td>LOG+Sleaze if looking for silent running icons</td>
+                    <span data-toggle="tooltip" data-placement="top" title="" id="matrixPerceptionDefense"></span>
+                </tr>
+                <tr>
+                    <td>
+                        Matrix Search
+                    </td>
+                    <td>n/a</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="matrixSearchDice"></span>
+                    </td>
+                    <td>n/a</td>
+                </tr>
+                <tr>
+                    <td>
+                        Reboot Device
+                    </td>
+                    <td>3</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="rebootDeviceDice"></span>
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="rebootDeviceDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Set Data Bomb
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="setDataBombDice"></span>
+                    </td>
+                    <td>Device Rating x 2</td>
+                </tr>
+                <tr>
+                    <td>
+                        Snoop
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="snoopDice"></span>
+                    </td>
+                    <td>LOG+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="snoopDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Spoof Command
+                    </td>
+                    <td>1</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="spoofDice"></span>
+                    </td>
+                    <td>LOG+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="spoofDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Trace Icon
+                    </td>
+                    <td>2</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="traceIconDice"></span>
+                    </td>
+                    <td>WIL+Sleaze</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="traceIconDefense"></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+      
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#resonancePanel">
+            <h3 class="panel-title">Resonance Actions <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="resonancePanel">
+            Resonance actions
+        
+            
+            <table class="table">
+                <tr>
+                    <td>
+                        <b>Action</b>
+                    </td>
+                    <td>
+                        <b>Dice</b>
+                    </td>
+                    <td>
+                        <b>Defended with</b>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        Compile Sprite
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="compileSpriteDice"></span>
+                    </td>
+                    <td>Sprite Level</td>
+                </tr>
+                <tr>
+                    <td>
+                        Decompile Sprite
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="decompileSpriteDice"></span>
+                    </td>
+                    <td>Sprite Rating (+compiler's RES)</td>
+                </tr>
+                <tr>
+                    <td>
+                        Kill Complex Form
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="killComplexFormDice"></span>
+                    </td>
+                    <td>Complex Form Level + RES</td>
+                </tr>
+                <tr>
+                    <td>
+                        Register Sprite
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="registerSpriteDice"></span>
+                    </td>
+                    <td>Sprite Level x 2</td>
+                </tr>
+                <tr>
+                    <td>
+                        Thread Complex Form
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="threadComplexFormDice"></span>
+                    </td>
+                    <td>special</td>
+                </tr>
+                <tr>
+                    <td>
+                        Fading
+                    </td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="fadingDice"></span>
+                    </td>
+                    <td>none</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading" data-toggle="collapse" data-target="#complexFormPanel">
+            <h3 class="panel-title">Complex Form Library <span class="glyphicon glyphicon-chevron-down"></span></h3>
+        </div>
+        <div class="panel-body collapse in" id="complexFormPanel">
+            List of Complex forms and their fade values
+            <table class="table">
+
+                <tr>
+                    <td>
+                        <b>Complex Form</b>
+                    </td>
+                    <td>
+                        <b>Target</b>
+                    </td>
+                    <td>
+                        <b>Duration</b>
+                    </td>
+                    <td><b>Fade Value</b></td>
+                    <td><b>Defended with</b></td>
+                    <td><b>Your Defense</b></td>
+                </tr>
+                <tr>
+                    <td>
+                        Cleaner
+                    </td>
+                    <td>Persona</td>
+                    <td>Permanent</td>
+                    <td>
+                        L + 1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Diffusion of [Matrix Attribute]
+                    </td>
+                    <td>Device</td>
+                    <td>Sustained</td>
+                    <td>
+                        L + 1
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="diffusionDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Editor
+                    </td>
+                    <td>File</td>
+                    <td>Permanent</td>
+                    <td>
+                        L + 2
+                    </td>
+                    <td>INT+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="editorDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Infusion of [Matrix Attribute]
+                    </td>
+                    <td>Device</td>
+                    <td>Sustained</td>
+                    <td>
+                        L + 1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Static Veil
+                    </td>
+                    <td>Persona</td>
+                    <td>Sustained</td>
+                    <td>
+                        L - 1
+                    </td>
+                    <td>Threshold 1 for Public grid. 2 for other grids.</td>
+                </tr>
+                <tr>
+                    <td>
+                        Pulse Storm
+                    </td>
+                    <td>Persona</td>
+                    <td>Immediate</td>
+                    <td>
+                        L + 0
+                    </td>
+                    <td>LOG+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="pulseStormDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Puppeteer
+                    </td>
+                    <td>Device</td>
+                    <td>Immediate</td>
+                    <td>
+                        L + 4
+                    </td>
+                    <td>WIL+Firewall (1 for Free Action, 2 for simple, 3 for Complex)</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="puppeteerDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resonance Channel
+                    </td>
+                    <td>Device</td>
+                    <td>Sustained</td>
+                    <td>
+                        L - 1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resonance Spike
+                    </td>
+                    <td>Device</td>
+                    <td>Immediate</td>
+                    <td>
+                        L + 0
+                    </td>
+                    <td>WIL+Firewall</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="resonanceSpikeDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Resonance Veil
+                    </td>
+                    <td>Device</td>
+                    <td>Sustained</td>
+                    <td>
+                        L - 1
+                    </td>
+                    <td>INT+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="resonanceVeilDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Static Bomb
+                    </td>
+                    <td>Self</td>
+                    <td>Immediate</td>
+                    <td>
+                        L + 2
+                    </td>
+                    <td>INT+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="staticBombDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Stitches
+                    </td>
+                    <td>Sprite</td>
+                    <td>Permanent</td>
+                    <td>
+                        L -2 
+                    </td>
+                    <td>LOG+Data Processing</td>
+                    <td>
+                        <span data-toggle="tooltip" data-placement="top" title="" id="stitchesDefense"></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Transcendent Grid
+                    </td>
+                    <td>Self</td>
+                    <td>Immediate</td>
+                    <td>
+                        L - 3
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tattletale
+                    </td>
+                    <td>Persona</td>
+                    <td>Permanent</td>
+                    <td>
+                        L -2
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
